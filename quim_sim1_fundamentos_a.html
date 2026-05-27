@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+<title>Simulacro Química — Fundamentos Generales — Enlaces, Soluciones, Reacciones y Estequiometría — Asesorías Académicas Izamal</title>
+<style>
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--azul:#0033cc;--azul-dark:#002299;--azul-light:#e8eeff;--naranja:#ff4500;--naranja-mid:#ff8c00;--bg:#f0f4ff;--card:#fff;--txt:#1a1a2e;--sub:#5a6080;--rad:14px;--shadow:0 6px 24px rgba(0,51,204,.13);}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:0 0 30px;}
+.hero{width:100%;background:linear-gradient(135deg,#0033cc 0%,#0011aa 60%,#001188 100%);padding:24px 20px 18px;display:flex;flex-direction:column;align-items:center;margin-bottom:18px;box-shadow:0 4px 20px rgba(0,0,0,.25);}
+.hero-inner{max-width:760px;width:100%;display:flex;align-items:center;gap:16px;}
+.hero-logo{width:76px;height:76px;flex-shrink:0;background:#fff;border-radius:50%;padding:5px;box-shadow:0 4px 14px rgba(0,0,0,.3);}
+.hero-logo img{width:100%;height:100%;object-fit:contain;border-radius:50%;}
+.hero-title{font-size:1.15rem;font-weight:800;color:#fff;line-height:1.2;}
+.hero-title span{color:#ff8c00}
+.hero-subtitle{font-size:.76rem;color:rgba(255,255,255,.8);margin-top:4px;line-height:1.5;}
+.hero-badge{display:inline-block;background:rgba(255,140,0,.25);border:1px solid rgba(255,140,0,.5);border-radius:20px;padding:3px 12px;font-size:.68rem;color:#ffd080;font-weight:700;margin-top:6px;}
+.hero-stripe{width:100%;height:4px;background:linear-gradient(90deg,#ff4500,#ff8c00,#ff4500);margin-top:16px;border-radius:3px;opacity:.7;}
+.wrap{width:100%;max-width:760px;padding:0 12px;}
+.card{background:var(--card);border-radius:var(--rad);box-shadow:var(--shadow);padding:22px 20px;margin-bottom:14px;}
+#screen-home h2{font-size:1.2rem;text-align:center;margin-bottom:6px;color:var(--azul);font-weight:800;}
+.home-sub{text-align:center;color:var(--sub);margin-bottom:18px;font-size:.84rem;line-height:1.6;}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
+.info-card{background:var(--azul-light);border-radius:12px;padding:13px 8px;text-align:center;border:2px solid #c0d0f0;}
+.info-card .val{font-size:1.3rem;font-weight:800;color:var(--azul);}
+.info-card .lbl{font-size:.7rem;color:var(--sub);margin-top:3px;font-weight:600;}
+.btn-primary{width:100%;border:none;border-radius:12px;padding:14px;cursor:pointer;font-size:.97rem;font-weight:800;background:linear-gradient(135deg,var(--naranja),var(--naranja-mid));color:#fff;box-shadow:0 4px 14px rgba(255,69,0,.35);transition:opacity .2s,transform .1s;}
+.btn-primary:hover{opacity:.92;}.btn-primary:active{transform:scale(.98);}
+#screen-exam{padding:0;}
+.exam-header{padding:14px 20px 0;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;}
+.lectura-pill{font-size:.76rem;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--azul),var(--azul-dark));padding:5px 13px;border-radius:20px;max-width:65%;line-height:1.3;}
+.timer-box{font-size:1rem;font-weight:800;padding:5px 13px;border-radius:20px;background:var(--azul-light);color:var(--azul);min-width:72px;text-align:center;border:2px solid #c0d0f0;flex-shrink:0;transition:all .3s;}
+.timer-box.warn{background:#fff3e8;color:#cc5500;border-color:#ffb080;}
+.timer-box.danger{background:#fff0f0;color:#cc0000;border-color:#ffb0b0;animation:pulse 1s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.progress-wrap{margin:0 20px 6px;height:6px;background:#e0e8ff;border-radius:3px;overflow:hidden;}
+.progress-bar{height:6px;border-radius:3px;background:linear-gradient(90deg,var(--naranja),var(--naranja-mid));transition:width .35s;}
+.nav-section{padding:8px 20px 12px;border-bottom:2px solid var(--azul-light);}
+.nav-label{font-size:.69rem;color:var(--sub);margin-bottom:6px;font-weight:700;letter-spacing:.3px;}
+.nav-grid{display:flex;flex-wrap:wrap;gap:5px;}
+.nav-sep{width:100%;font-size:.67rem;color:var(--sub);font-weight:700;margin:5px 0 3px;letter-spacing:.3px;}
+.nav-btn{width:30px;height:30px;border-radius:7px;border:2px solid #d0d8f0;background:#fff;font-size:.78rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s;color:var(--txt);flex-shrink:0;}
+.nav-btn:hover{border-color:var(--azul);background:var(--azul-light);}
+.nav-btn.answered{background:var(--azul);border-color:var(--azul);color:#fff;}
+.nav-btn.wrong-nav{background:var(--naranja);border-color:var(--naranja);color:#fff;}
+.nav-btn.current{border-width:3px;transform:scale(1.1);}
+.exam-body{padding:14px 20px 20px;}
+.lectura-header{font-size:.88rem;font-weight:800;color:var(--azul);margin-bottom:12px;padding:8px 12px;background:var(--azul-light);border-radius:9px;border-left:4px solid var(--azul);}
+.lectura-texto{font-size:.87rem;line-height:1.8;color:var(--txt);margin-bottom:18px;padding:14px 16px;background:#fafbff;border:1px solid #d8e0f0;border-radius:10px;max-height:260px;overflow-y:auto;}
+.lectura-texto p{margin-bottom:10px;}.lectura-texto p:last-child{margin-bottom:0;}
+.q-num{font-size:.72rem;color:var(--sub);margin-bottom:6px;font-weight:700;letter-spacing:.3px;}
+.q-text{font-size:.94rem;line-height:1.7;margin-bottom:14px;font-weight:500;}
+.options{display:flex;flex-direction:column;gap:9px;}
+.opt-btn{border:2px solid #d0d8f0;border-radius:10px;background:#fff;padding:11px 14px;text-align:left;cursor:pointer;font-size:.88rem;line-height:1.5;transition:border-color .18s,background .18s;display:flex;align-items:flex-start;gap:10px;width:100%;}
+.opt-btn:hover:not(:disabled){border-color:var(--azul);background:var(--azul-light);}
+.opt-letter{min-width:26px;height:26px;border-radius:50%;background:#e8eeff;font-weight:800;font-size:.79rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;color:var(--azul);}
+.opt-btn.correct{border-color:#27ae60;background:#eafaf1;}.opt-btn.correct .opt-letter{background:#27ae60;color:#fff;}
+.opt-btn.wrong{border-color:var(--naranja);background:#fff3f0;}.opt-btn.wrong .opt-letter{background:var(--naranja);color:#fff;}
+.opt-btn:disabled{cursor:default;}
+.explanation{display:none;margin-top:11px;background:#f8f9fe;border-left:4px solid #27ae60;padding:9px 13px;border-radius:0 8px 8px 0;font-size:.83rem;line-height:1.65;color:var(--txt);}
+.explanation.show{display:block;}.explanation.fail{border-left-color:var(--naranja);}
+.exam-footer{padding:0 20px 18px;display:flex;gap:8px;align-items:center;margin-top:12px;}
+.btn-nav{flex:1;padding:10px 5px;border-radius:10px;border:2px solid #d0d8f0;background:#fff;font-size:.85rem;font-weight:700;cursor:pointer;color:var(--txt);transition:all .18s;}
+.btn-nav:hover{border-color:var(--azul);background:var(--azul-light);}.btn-nav:disabled{opacity:.35;cursor:default;}
+.btn-entregar{padding:10px 15px;border-radius:10px;border:none;font-size:.85rem;font-weight:800;cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--naranja),var(--naranja-mid));white-space:nowrap;box-shadow:0 3px 10px rgba(255,69,0,.3);}
+#screen-timeout{text-align:center;}
+#screen-timeout h2{font-size:1.2rem;margin-bottom:10px;color:var(--naranja);}
+#screen-timeout p{color:var(--sub);margin-bottom:20px;line-height:1.6;}
+#screen-results h2{text-align:center;font-size:1.2rem;margin-bottom:14px;color:var(--azul);font-weight:800;}
+.result-summary{background:linear-gradient(135deg,var(--azul),var(--azul-dark));border-radius:14px;padding:20px;text-align:center;margin-bottom:16px;box-shadow:0 4px 16px rgba(0,51,204,.25);}
+.result-score{font-size:2.5rem;font-weight:800;color:#fff;}
+.result-label{font-size:.82rem;color:rgba(255,255,255,.8);margin-top:3px;}
+.lect-results{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.lect-card{border-radius:12px;padding:13px;border:2px solid #c0d0f0;background:var(--azul-light);}
+.lect-card-title{font-size:.68rem;font-weight:800;color:var(--azul);text-transform:uppercase;letter-spacing:.3px;margin-bottom:6px;}
+.lect-card-score{font-size:1.5rem;font-weight:800;color:var(--azul);}
+.lect-card-pct{font-size:.75rem;color:var(--sub);margin-top:2px;}
+.result-bars{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-bottom:16px;}
+.rbar-card{border-radius:11px;padding:11px 7px;text-align:center;color:#fff;}
+.rbar-val{font-size:1.2rem;font-weight:800;}.rbar-lbl{font-size:.67rem;opacity:.85;margin-top:2px;}
+.cne-block{background:#fff;border:2px solid #c0d0f0;border-radius:12px;padding:15px 17px;margin-bottom:14px;}
+.cne-title{font-size:.73rem;font-weight:800;color:var(--azul);letter-spacing:.4px;margin-bottom:9px;text-transform:uppercase;}
+.cne-score-row{display:flex;align-items:baseline;gap:8px;margin-bottom:3px;}
+.cne-score{font-size:2.4rem;font-weight:800;line-height:1;}
+.cne-max{font-size:.8rem;color:var(--sub);font-weight:600;}
+.cne-label{font-size:.8rem;font-weight:700;margin-bottom:11px;}
+.cne-scale-labels{display:flex;justify-content:space-between;font-size:.62rem;color:var(--sub);margin-bottom:3px;}
+.cne-track{height:10px;background:#e8eeff;border-radius:5px;overflow:hidden;}
+.cne-fill{height:100%;border-radius:5px;transition:width .9s ease;}
+.cne-ticks{display:flex;justify-content:space-between;margin-top:2px;}.cne-tick{font-size:.58rem;color:#aab4d4;}
+.cne-note{font-size:.67rem;color:var(--sub);margin-top:8px;line-height:1.5;border-top:1px solid #e8eeff;padding-top:6px;}
+.review-section h3{font-size:.86rem;margin-bottom:9px;font-weight:800;color:var(--azul);}
+.rev-lect-hdr{font-size:.78rem;font-weight:800;margin:12px 0 7px;padding:5px 11px;border-radius:7px;background:var(--azul-light);color:var(--azul);}
+.rev-item{border:1px solid #d8e4f8;border-radius:9px;padding:11px 13px;margin-bottom:7px;}
+.rev-header{display:flex;align-items:center;gap:6px;margin-bottom:5px;}
+.rev-badge{font-size:.67rem;font-weight:700;padding:2px 7px;border-radius:20px;}
+.rev-badge.ok{background:#d5f5e3;color:#1e8449;}.rev-badge.fail{background:#fce4e4;color:#c0392b;}.rev-badge.skip{background:#f0f0f0;color:#888;}
+.rev-num{font-size:.68rem;color:#aaa;}.rev-q{font-size:.83rem;line-height:1.5;margin-bottom:4px;}
+.rev-ans{font-size:.77rem;color:var(--sub);}.rev-ans.ok-ans{color:#1e8449;font-weight:600;}
+.rev-exp{font-size:.77rem;color:var(--txt);margin-top:4px;border-top:1px solid #eef0f8;padding-top:4px;line-height:1.5;}
+.btn-retry{background:linear-gradient(135deg,var(--azul),var(--azul-dark));color:#fff;border:none;border-radius:12px;width:100%;padding:12px;font-size:.93rem;font-weight:800;cursor:pointer;margin-top:10px;}.btn-retry:hover{opacity:.88;}
+.modal-bg{position:fixed;inset:0;background:rgba(0,20,80,.5);display:none;align-items:center;justify-content:center;z-index:999;padding:16px;}
+.modal-bg.open{display:flex;}
+.modal{background:#fff;border-radius:14px;padding:22px 18px;max-width:330px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,.2);}
+.modal h3{font-size:.97rem;margin-bottom:7px;color:var(--azul);font-weight:800;}
+.modal p{font-size:.83rem;color:var(--sub);margin-bottom:16px;line-height:1.6;}
+.modal-btns{display:flex;gap:8px;}.modal-btns button{flex:1;padding:10px;border-radius:9px;border:none;font-size:.86rem;font-weight:700;cursor:pointer;}
+.btn-cancel{background:#eef0f8;color:var(--txt);}.btn-confirm{background:linear-gradient(135deg,var(--naranja),var(--naranja-mid));color:#fff;}
+@media(max-width:560px){body{padding:0 0 20px;}.wrap{padding:0 8px;}.card{padding:16px 12px;}.exam-header,.exam-body,.exam-footer,.nav-section,.progress-wrap{padding-left:13px;padding-right:13px;}.nav-btn{width:27px;height:27px;font-size:.74rem;}.result-score{font-size:2rem;}.cne-score{font-size:1.9rem;}.lect-results{grid-template-columns:1fr;}.info-grid{grid-template-columns:1fr 1fr;}}
+
+.habilidades-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+.hab-tag{background:var(--azul-light);border:1px solid #c0d0f0;border-radius:8px;
+  padding:9px 10px;font-size:.76rem;color:var(--azul);font-weight:600;
+  display:flex;align-items:center;gap:7px;}
+.q-text{white-space:pre-line;font-size:.93rem;line-height:1.8;margin-bottom:14px;font-weight:500;}
+.tip-box{background:#f0f7ff;border:1px solid #c0d8f0;border-radius:10px;
+  padding:11px 14px;margin-bottom:16px;font-size:.8rem;color:#2c5282;line-height:1.7;}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-logo"><img src="logo.png" alt="Logo" style="width:60px;height:60px;object-fit:contain"></div>
+    <div>
+      <div class="hero-title">Asesorías Académicas <span>Izamal</span></div>
+      <div class="hero-subtitle">Simulacro EXANI-II · Química · Subárea 1: Fundamentos Generales</div>
+      <span class="hero-badge">⚗️ Subárea 1: Fundamentos Generales</span>
+    </div>
+  </div>
+  <div class="hero-stripe"></div>
+</div>
+<div class="wrap">
+<div class="card" id="screen-home">
+  <h2>Simulacro 1 — Fundamentos Generales — Enlaces, Soluciones, Reacciones y Estequiometría</h2>
+  <p class="home-sub">Repaso general · Módulo Química EXANI-II<br>Ten papel y lápiz para cálculos. Reactivos basados en ediciones pasadas.</p>
+  <div class="habilidades-grid"><div class="hab-tag"><span>🔗</span> Tipos de enlace y electronegatividad (6)</div><div class="hab-tag"><span>💧</span> Soluciones: concentración y molaridad (4)</div><div class="hab-tag"><span>⚗️</span> Balanceo y tipos de reacciones (6)</div><div class="hab-tag"><span>⚖️</span> Estequiometría: mol, masa, reactivo limitante (5)</div><div class="hab-tag"><span>🌡️</span> Termoquímica y equilibrio (3)</div></div>
+  <div class="info-grid">
+    <div class="info-card"><div class="val">24</div><div class="lbl">Preguntas</div></div>
+    <div class="info-card"><div class="val">40 min</div><div class="lbl">Tiempo</div></div>
+    <div class="info-card"><div class="val">V1</div><div class="lbl">Versión</div></div>
+  </div>
+  <div class="tip-box">💡 <strong>Tip EXANI-II:</strong> Ten papel y lápiz. En estequiometría, identifica reactivos y productos antes de calcular. En nomenclatura, aplica reglas IUPAC. Usa la Tabla Periódica mentalmente para electronegatividades.</div>
+  <button class="btn-primary" onclick="startExam()">▶ Comenzar simulacro</button>
+</div>
+<div class="card" id="screen-exam" style="display:none;padding:0">
+  <div class="exam-header">
+    <div class="lectura-pill">⚗️ Subárea 1: Fundamentos Generales</div>
+    <div class="timer-box" id="timer-box">40:00</div>
+  </div>
+  <div class="progress-wrap"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
+  <div class="nav-section">
+    <div class="nav-label">Azul: correcta · Naranja: incorrecta · Gris: pendiente</div>
+    <div class="nav-grid" id="nav-grid"></div>
+  </div>
+  <div class="exam-body">
+    <div class="q-num" id="q-num"></div>
+    <div class="q-text" id="q-text"></div>
+    <div class="options" id="options"></div>
+    <div class="explanation" id="explanation"></div>
+  </div>
+  <div class="exam-footer">
+    <button class="btn-nav" id="btn-prev" onclick="goTo(STATE.qIdx-1)">← Anterior</button>
+    <button class="btn-nav" id="btn-next-nav" onclick="goTo(STATE.qIdx+1)">Siguiente →</button>
+    <button class="btn-entregar" id="btn-entregar" style="display:none" onclick="pedirConfirmar()">Entregar</button>
+  </div>
+</div>
+<div class="card" id="screen-timeout" style="display:none">
+  <h2 style="color:var(--naranja);text-align:center;margin-bottom:10px">⏰ Tiempo agotado</h2>
+  <p style="text-align:center;color:var(--sub);margin-bottom:20px">Se agotó el tiempo. Las preguntas sin responder cuentan como incorrectas.</p>
+  <button class="btn-retry" onclick="finishAndShow()">Ver resultados →</button>
+</div>
+<div class="card" id="screen-results" style="display:none">
+  <h2>📊 Resultados del simulacro</h2>
+  <div class="result-summary"><div class="result-score" id="res-score">—</div><div class="result-label">Reactivos correctos · 24 preguntas</div></div>
+  <div class="cne-block">
+    <div class="cne-title">📊 Índice CENEVAL Estimado</div>
+    <div class="cne-score-row"><span class="cne-score" id="cne-val">—</span><span class="cne-max">/ 1300</span></div>
+    <div class="cne-label" id="cne-lbl"></div>
+    <div class="cne-scale-labels"><span>700</span><span>800</span><span>900</span><span>1000</span><span>1100</span><span>1200</span><span>1300</span></div>
+    <div class="cne-track"><div class="cne-fill" id="cne-bar" style="width:0%"></div></div>
+    <div class="cne-ticks"><span class="cne-tick">▲Mín</span><span class="cne-tick" style="margin:0 auto">▲Media(1000)</span><span class="cne-tick">Máx▲</span></div>
+    <div class="cne-note" id="cne-note"></div>
+  </div>
+  <div class="result-bars">
+    <div class="rbar-card" style="background:#27ae60"><div class="rbar-val" id="res-ok">0</div><div class="rbar-lbl">Correctas</div></div>
+    <div class="rbar-card" style="background:var(--naranja)"><div class="rbar-val" id="res-fail">0</div><div class="rbar-lbl">Incorrectas</div></div>
+    <div class="rbar-card" style="background:#95a5a6"><div class="rbar-val" id="res-skip">0</div><div class="rbar-lbl">Sin responder</div></div>
+  </div>
+  <div class="review-section"><h3>Revisión detallada</h3><div id="review-list"></div></div>
+  <button class="btn-retry" onclick="retryExam()">🔄 Intentar de nuevo</button>
+</div>
+<div class="modal-bg" id="modal-bg">
+  <div class="modal">
+    <h3>¿Entregar el simulacro?</h3><p id="modal-msg"></p>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="cerrarModal()">Cancelar</button>
+      <button class="btn-confirm" onclick="confirmarEntrega()">Entregar</button>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+const BANCO = [
+{
+"tipo": "regular",
+"enunciado": "¿Cuál es la relación entre electronegatividad y el tipo de enlace químico que se forma?",
+"a": "A mayor diferencia de electronegatividad entre dos átomos, más covalente es el enlace.",
+"b": "Cuando la diferencia de electronegatividad entre dos átomos es grande (>1.7), se forma un enlace iónico; si es pequeña o nula, el enlace es covalente.",
+"c": "La electronegatividad no influye en el tipo de enlace químico.",
+"correcta": "b",
+"exp": "La electronegatividad (tendencia a atraer electrones) determina el tipo de enlace: Δ EN = 0: enlace covalente no polar (H₂, O₂). Δ EN = 0.1-1.6: enlace covalente polar (H₂O, HCl). Δ EN > 1.7: enlace iónico (NaCl: Na 0.9, Cl 3.0, Δ=2.1). Los metales con electronegatividad muy baja forman el enlace metálico entre sí. La escala de Pauling mide la electronegatividad (F=4.0, el más electronegativo)."
+},
+{
+"tipo": "regular",
+"enunciado": "¿Cuál es la diferencia entre un enlace iónico y un enlace covalente?",
+"a": "El enlace iónico comparte electrones; el covalente los transfiere.",
+"b": "El enlace iónico implica transferencia de electrones entre un metal y un no metal, formando iones con carga opuesta; el covalente implica compartición de electrones entre dos no metales.",
+"c": "Ambos tipos de enlace son equivalentes: solo difieren en la energía de formación.",
+"correcta": "b",
+"exp": "Enlace iónico: se forma por transferencia de electrones de un átomo con baja electronegatividad (metal) a uno con alta electronegatividad (no metal). Resultado: catión (+) y anión (-) atraídos electrostáticamente. Ejemplo: NaCl (Na⁺ + Cl⁻). Enlace covalente: dos átomos no metálicos comparten uno o más pares de electrones. Ejemplos: H₂ (comparte 1 par), O₂ (doble enlace), N₂ (triple enlace). Los covalentes pueden ser polares o no polares."
+},
+{
+"tipo": "regular",
+"enunciado": "¿Cuál es la electronegatividad más alta y cuál es el elemento con mayor electronegatividad según la escala de Pauling?",
+"a": "El carbono (C), con electronegatividad de 2.5.",
+"b": "El oxígeno (O), con electronegatividad de 3.5.",
+"c": "El flúor (F), con electronegatividad de 4.0.",
+"correcta": "c",
+"exp": "El flúor (F) es el elemento con mayor electronegatividad en la escala de Pauling (4.0). La electronegatividad aumenta de izquierda a derecha en un período y de abajo hacia arriba en un grupo de la Tabla Periódica. Orden de electronegatividad: F(4.0) > O(3.5) > N(3.0) > Cl(3.0) > C(2.5) > H(2.1) > metales. Esta tendencia explica la polaridad de los enlaces y la reactividad de los compuestos."
+},
+{
+"tipo": "regular",
+"enunciado": "Cuando dos átomos de nitrógeno (N-N) se unen mediante un enlace, la diferencia de electronegatividad es:",
+"a": "Mayor que 1.7, formando un enlace iónico.",
+"b": "Igual a cero, formando un enlace covalente no polar.",
+"c": "Entre 0.5 y 1.7, formando un enlace covalente polar.",
+"correcta": "b",
+"exp": "Cuando los dos átomos que forman el enlace son de la misma especie química (N-N, H-H, O₂), tienen electronegatividades iguales: Δ EN = 0. Los electrones se ubican simétricamente entre los dos núcleos, formando un enlace covalente no polar. No hay dipolo eléctrico. Esto es contrario al enlace iónico (Δ EN > 1.7) o al covalente polar (0 < Δ EN < 1.7)."
+},
+{
+"tipo": "asoc",
+"enunciado": "Relaciona cada tipo de enlace químico con su ejemplo.\n1. Enlace iónico  2. Enlace covalente no polar  3. Enlace covalente polar  4. Enlace metálico\n—\na) H₂O: el oxígeno atrae más fuertemente los electrones compartidos con el hidrógeno.\nb) N₂: dos átomos del mismo elemento comparten tres pares de electrones.\nc) NaCl: el sodio transfiere su electrón de valencia al cloro.\nd) Cu (cobre): los electrones de valencia forman un 'mar de electrones' compartido.",
+"a": "1c - 2b - 3a - 4d",
+"b": "1b - 2c - 3d - 4a",
+"c": "1d - 2a - 3c - 4b",
+"correcta": "a",
+"exp": "Iónico (1c): NaCl, Δ EN = 2.1, transferencia de electrones. No polar (2b): N₂, Δ EN = 0, mismos átomos. Polar (3a): H₂O, Δ EN = 1.4, O más electronegativo. Metálico (4d): Cu, electrones deslocalizados en red metálica, explica conductividad eléctrica y maleabilidad."
+},
+{
+"tipo": "regular",
+"enunciado": "¿Cuál es la diferencia entre una solución concentrada y una diluida?",
+"a": "Una solución concentrada tiene más solvente; una diluida tiene más soluto.",
+"b": "Una solución concentrada tiene mayor cantidad de soluto disuelto en relación al solvente; una diluida tiene menor cantidad de soluto.",
+"c": "Las soluciones concentradas siempre son ácidas; las diluidas siempre son básicas.",
+"correcta": "b",
+"exp": "La concentración de una solución indica la cantidad de soluto (sustancia disuelta) en relación al solvente (líquido disolvente) o a la solución total. Solución concentrada: alto cociente soluto/solvente. Solución diluida: bajo cociente soluto/solvente. Se puede cuantificar mediante: porcentaje en masa (%), partes por millón (ppm) o molaridad (mol/L). No existe relación directa con el pH (acidez/basicidad)."
+},
+{
+"tipo": "regular",
+"enunciado": "¿Cuántos gramos de NaCl se necesitan para preparar 500 mL de una solución al 10% en masa? (Considera que la densidad es ~1 g/mL)",
+"a": "10 g",
+"b": "50 g",
+"c": "100 g",
+"correcta": "b",
+"exp": "Solución al 10% en masa: 10 g de NaCl por cada 100 g de solución. 500 mL × 1 g/mL = 500 g de solución. 10% de 500 g = 0.10 × 500 = 50 g de NaCl. Los restantes 450 g son agua (solvente). La concentración porcentual en masa = (masa soluto / masa solución) × 100%."
+},
+{
+"tipo": "regular",
+"enunciado": "¿Cuántos moles de NaOH hay en 200 mL de una solución 2 M?",
+"a": "0.4 moles",
+"b": "400 moles",
+"c": "2 moles",
+"correcta": "a",
+"exp": "Molaridad (M) = moles de soluto / litros de solución. Despejando: moles = M × V(L) = 2 mol/L × 0.200 L = 0.4 moles de NaOH. Si la solución fuera 1 litro: habría 2 moles. El error común es usar mL directamente sin convertir a litros."
+},
+{
+"tipo": "regular",
+"enunciado": "¿Qué son las partes por millón (ppm) como unidad de concentración?",
+"a": "mg de soluto por litro de solución (para soluciones diluidas acuosas equivale a mg/L).",
+"b": "Número de moles de soluto por cada millón de moles de solución.",
+"c": "Gramos de soluto por cada 100 mL de solución.",
+"correcta": "a",
+"exp": "Partes por millón (ppm) = mg de soluto por kg de solución = mg/L para soluciones acuosas diluidas (donde 1 L ≈ 1 kg). Se usa para expresar concentraciones muy bajas (contaminantes en agua, trazas de metales pesados). Ejemplo: el límite de arsénico en agua potable es 10 ppm = 10 mg/L. También se puede expresar como: μg/mL o μg/g."
+},
+{
+"tipo": "regular",
+"enunciado": "¿Cuál de las siguientes ecuaciones está correctamente balanceada?\n\nCH₄ + O₂ → CO₂ + H₂O",
+"a": "CH₄ + O₂ → CO₂ + H₂O (tal como está)",
+"b": "CH₄ + 2O₂ → CO₂ + 2H₂O",
+"c": "2CH₄ + O₂ → 2CO + 4H₂O",
+"correcta": "b",
+"exp": "Verificar balance en CH₄ + 2O₂ → CO₂ + 2H₂O: C: 1 = 1 ✓; H: 4 = 4 (2×2) ✓; O: 4 (2×2) = 4 (2+2) ✓. La opción a) no está balanceada: O reactivos = 2, O productos = 3. La opción c) tiene CO (monóxido, no dióxido) y el balance de O no cuadra. La combustión completa del metano produce CO₂ y H₂O."
+},
+{
+"tipo": "regular",
+"enunciado": "Al balancear la ecuación: Al + O₂ → Al₂O₃, ¿cuáles son los coeficientes correctos?",
+"a": "2Al + 3O₂ → 2Al₂O₃",
+"b": "4Al + 3O₂ → 2Al₂O₃",
+"c": "Al + O₂ → Al₂O₃",
+"correcta": "b",
+"exp": "Balanceo de 4Al + 3O₂ → 2Al₂O₃: Al: 4 = 4 (2×2) ✓; O: 6 (3×2) = 6 (2×3) ✓. Esta es la combustión del aluminio, reacción de síntesis. La opción a) no está balanceada: Al: 2≠4; la opción c) tiene Al: 1≠2 y O: 2≠3."
+},
+{
+"tipo": "asoc",
+"enunciado": "Relaciona cada tipo de reacción química con su descripción.\n1. Síntesis  2. Descomposición  3. Sustitución simple  4. Combustión\n—\na) Un elemento desplaza a otro de un compuesto: Zn + CuSO₄ → ZnSO₄ + Cu.\nb) Reacción de sustancia con oxígeno produciendo calor y luz: CH₄ + 2O₂ → CO₂ + 2H₂O.\nc) Una sola sustancia se divide en dos o más productos: 2H₂O → 2H₂ + O₂.\nd) Dos o más sustancias se unen para formar un producto: N₂ + 3H₂ → 2NH₃.",
+"a": "1d - 2c - 3a - 4b",
+"b": "1c - 2d - 3b - 4a",
+"c": "1b - 2a - 3d - 4c",
+"correcta": "a",
+"exp": "Síntesis (1d): A + B → AB. Descomposición (2c): AB → A + B (electrólisis del agua). Sustitución simple (3a): A + BC → AC + B (Zn desplaza al Cu). Combustión (4b): sustancia + O₂ → óxidos + calor. También existe la doble sustitución (AB + CD → AD + CB) que no aparece aquí."
+},
+{
+"tipo": "regular",
+"enunciado": "¿Cuál es la diferencia entre una reacción endotérmica y una exotérmica?",
+"a": "En la reacción endotérmica se libera energía al ambiente; en la exotérmica se absorbe.",
+"b": "En la reacción endotérmica el sistema absorbe energía del entorno (ΔH > 0); en la exotérmica el sistema libera energía al entorno (ΔH < 0).",
+"c": "Las reacciones endotérmicas siempre producen gases; las exotérmicas siempre producen sólidos.",
+"correcta": "b",
+"exp": "Reacción exotérmica: libera calor al entorno, ΔH < 0 (negativo). Los productos tienen menos energía que los reactivos. Ejemplos: combustión, neutralización ácido-base. Se siente calor. Reacción endotérmica: absorbe calor del entorno, ΔH > 0 (positivo). Los productos tienen más energía que los reactivos. Ejemplos: fotosíntesis, disolución de NH₄NO₃ en agua (bolsas de frío). Se siente frío."
+},
+{
+"tipo": "regular",
+"enunciado": "¿Cuál es la entalpía de formación estándar (ΔHf°) y para qué se usa?",
+"a": "Es la energía necesaria para romper todos los enlaces de un compuesto.",
+"b": "Es el calor liberado o absorbido al formarse 1 mol de un compuesto a partir de sus elementos en sus estados estándar (25°C, 1 atm).",
+"c": "Es la temperatura a la que una reacción se vuelve espontánea.",
+"correcta": "b",
+"exp": "La entalpía de formación estándar (ΔHf°) es el cambio de entalpía cuando se forma 1 mol de compuesto desde sus elementos en estado estándar. Por convención, ΔHf° de los elementos puros en su estado de referencia = 0. Se usa para calcular la entalpía de reacción: ΔHrxn = Σ ΔHf° (productos) - Σ ΔHf° (reactivos). Ejemplo: ΔHf° del H₂O(l) = -285.8 kJ/mol (exotérmica su formación)."
+},
+{
+"tipo": "regular",
+"enunciado": "¿Cuántos gramos de CO₂ se producen al quemar completamente 8 g de CH₄? (M CH₄ = 16 g/mol; M CO₂ = 44 g/mol)",
+"a": "44 g",
+"b": "22 g",
+"c": "11 g",
+"correcta": "b",
+"exp": "Reacción: CH₄ + 2O₂ → CO₂ + 2H₂O. Relación molar 1:1 (1 mol CH₄ produce 1 mol CO₂). Moles CH₄ = 8 g ÷ 16 g/mol = 0.5 mol. Moles CO₂ = 0.5 mol. Masa CO₂ = 0.5 mol × 44 g/mol = 22 g. En estequiometría: mol del dado × (coeficiente buscado/coeficiente dado) × masa molar buscada."
+},
+{
+"tipo": "regular",
+"enunciado": "¿Qué es la constante de equilibrio (Keq) en una reacción química reversible?",
+"a": "La temperatura a la que la reacción avanza en ambas direcciones con igual velocidad.",
+"b": "Un valor que relaciona las concentraciones de productos y reactivos en el equilibrio: Keq = [productos]^n / [reactivos]^m.",
+"c": "La energía mínima necesaria para que la reacción ocurra.",
+"correcta": "b",
+"exp": "La constante de equilibrio (Keq) para: aA + bB ⇌ cC + dD es: Keq = [C]^c[D]^d / [A]^a[B]^b, donde las concentraciones son las del equilibrio. Keq >> 1: equilibrio favorece productos. Keq << 1: equilibrio favorece reactivos. Keq = 1: concentraciones similares en equilibrio. Es característica de cada reacción a una temperatura dada. La energía de activación (opción c) es el concepto de la teoría de la colisión."
+},
+{
+"tipo": "regular",
+"enunciado": "¿Cuál es la relación molar en la reacción: 2H₂ + O₂ → 2H₂O?",
+"a": "Se requieren 2 moles de H₂ y 1 mol de O₂ para producir 2 moles de H₂O.",
+"b": "Se requiere 1 mol de H₂ y 1 mol de O₂ para producir 1 mol de H₂O.",
+"c": "Se requieren 2 moles de H₂ y 2 moles de O₂ para producir 2 moles de H₂O.",
+"correcta": "a",
+"exp": "Los coeficientes estequiométricos en la ecuación balanceada 2H₂ + O₂ → 2H₂O indican la relación molar exacta: 2 mol H₂ : 1 mol O₂ : 2 mol H₂O. Esta proporción se mantiene independientemente de la cantidad real de sustancia. La estequiometría permite calcular masas, moles y volúmenes de reactivos y productos."
+},
+{
+"tipo": "regular",
+"enunciado": "¿Cuál es la diferencia entre el reactivo limitante y el reactivo en exceso?",
+"a": "El reactivo limitante es el que se produce en mayor cantidad; el de exceso es el que se agota primero.",
+"b": "El reactivo limitante se agota primero y determina la cantidad máxima de producto; el reactivo en exceso queda sobrante al terminar la reacción.",
+"c": "No existe diferencia real entre reactivo limitante y en exceso.",
+"correcta": "b",
+"exp": "El reactivo limitante es el reactivo que se consume completamente primero, determinando la cantidad máxima (rendimiento teórico) de producto que puede formarse. El reactivo en exceso queda sin reaccionar. Para identificar el limitante: calcular moles de producto que produciría cada reactivo por separado; el que produce menos moles de producto es el limitante. El rendimiento porcentual = (rendimiento real / rendimiento teórico) × 100%."
+},
+{
+"tipo": "regular",
+"enunciado": "¿Cuál es el número de Avogadro y qué representa?",
+"a": "6.022 × 10²³, el número de partículas (átomos, moléculas o iones) en 1 mol de cualquier sustancia.",
+"b": "6.022 × 10²³, el número de gramos por mol de una sustancia.",
+"c": "1.6 × 10⁻¹⁹, la carga del electrón en coulombs.",
+"correcta": "a",
+"exp": "El número de Avogadro (NA = 6.022 × 10²³ mol⁻¹) es la cantidad de partículas elementales (átomos, moléculas, iones o electrones) contenidas en 1 mol de cualquier sustancia. Es la conexión entre la escala macroscópica (gramos) y la microscópica (átomos). Ejemplo: 1 mol de H₂O contiene 6.022 × 10²³ moléculas y pesa 18 g (la masa molar)."
+},
+{
+"tipo": "asoc",
+"enunciado": "Relaciona cada concepto de estequiometría con su definición.\n1. Mol  2. Masa molar  3. Reactivo limitante  4. Rendimiento porcentual\n—\na) Cociente entre la cantidad real de producto y la cantidad teórica máxima × 100%.\nb) 6.022 × 10²³ partículas de una sustancia.\nc) Masa en gramos de 1 mol de una sustancia (g/mol).\nd) El reactivo que se agota primero y limita la cantidad de producto.",
+"a": "1b - 2c - 3d - 4a",
+"b": "1c - 2b - 3a - 4d",
+"c": "1d - 2a - 3b - 4c",
+"correcta": "a",
+"exp": "Mol (1b): unidad SI que equivale a 6.022×10²³ partículas (número de Avogadro). Masa molar (2c): masa de 1 mol en g/mol; numéricamente igual a la masa atómica o molecular. Reactivo limitante (3d): el primero en agotarse; determina el rendimiento teórico. Rendimiento % (4a): mide la eficiencia real de una reacción; siempre ≤100%."
+},
+{
+"tipo": "regular",
+"enunciado": "¿Cuál es la diferencia entre una reacción de neutralización y una de combustión?",
+"a": "En la neutralización se forma agua y una sal al reaccionar un ácido con una base; en la combustión una sustancia reacciona con oxígeno produciendo óxidos y energía.",
+"b": "La neutralización produce gases; la combustión produce sales.",
+"c": "Son el mismo tipo de reacción expresada de forma diferente.",
+"correcta": "a",
+"exp": "Neutralización: ácido + base → sal + agua. Ejemplo: HCl + NaOH → NaCl + H₂O. Es una reacción de doble sustitución. El ΔH generalmente es negativo (exotérmica). Combustión: sustancia (combustible) + O₂ → óxidos + energía. Combustión completa: produce CO₂ + H₂O. Incompleta: produce CO (monóxido) + hollín. Son reacciones químicamente distintas con mecanismos y productos diferentes."
+},
+{
+"tipo": "regular",
+"enunciado": "¿Cuántos átomos hay en 2 moles de H₂O?",
+"a": "2 × 6.022 × 10²³ átomos",
+"b": "6 × 6.022 × 10²³ átomos",
+"c": "2 × 6.022 × 10²³ moléculas",
+"correcta": "b",
+"exp": "2 moles de H₂O: 2 × 6.022×10²³ moléculas. Cada molécula de H₂O tiene 3 átomos (2 de H + 1 de O). Total de átomos = 2 mol × 6.022×10²³ moléculas/mol × 3 átomos/molécula = 6 × 6.022×10²³ átomos ≈ 3.613 × 10²⁴ átomos. La opción c) es correcta en moléculas, no en átomos."
+},
+{
+"tipo": "regular",
+"enunciado": "¿Cuál es la diferencia entre proceso endotérmico y exotérmico en términos de la variación de entalpía (ΔH)?",
+"a": "ΔH > 0 en procesos exotérmicos; ΔH < 0 en procesos endotérmicos.",
+"b": "ΔH < 0 en procesos exotérmicos (liberan calor); ΔH > 0 en procesos endotérmicos (absorben calor).",
+"c": "ΔH = 0 en ambos tipos de procesos.",
+"correcta": "b",
+"exp": "Proceso exotérmico: el sistema libera energía al entorno → ΔH < 0 (negativo). Ejemplos: combustión del gas, respiración celular, solidificación. El entorno se calienta. Proceso endotérmico: el sistema absorbe energía del entorno → ΔH > 0 (positivo). Ejemplos: fotosíntesis, fusión del hielo, evaporación. El entorno se enfría. La entalpía (H) mide el contenido de calor del sistema a presión constante."
+},
+{
+"tipo": "comp",
+"enunciado": "La reacción química en la que una sustancia reacciona con oxígeno liberando energía en forma de calor y luz se denomina reacción de _______.\n\na) neutralización\nb) descomposición\nc) combustión",
+"a": "neutralización",
+"b": "descomposición",
+"c": "combustión",
+"correcta": "c",
+"exp": "La reacción de combustión es la reacción de una sustancia (combustible, generalmente un compuesto orgánico o el hidrógeno) con el oxígeno, produciendo óxidos (CO₂, H₂O en combustión completa) y liberando energía en forma de calor y luz. Ejemplos: combustión del metano (gas natural), del propano (gas LP), de la gasolina. La neutralización es ácido+base→sal+agua. La descomposición es A→B+C."
+}
+];
+const TIEMPO_MIN = 40;
+const STATE = {qIdx:0,answers:{},timerSec:0,timerID:null};
+const $=id=>document.getElementById(id);
+const show=id=>$(id).style.display='block';
+const hide=id=>$(id).style.display='none';
+function fmtT(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
+function calcCNE(c,t){if(!t)return 1000;const z=((c/t)*100-50)/16.67;return Math.min(1300,Math.max(700,Math.round(1000+100*z)));}
+function cneColor(c){return c>=1050?'#1e8449':c>=950?'#d4ac0d':'#cc3300';}
+function cneLabel(c){return c>=1100?'Muy por encima de la media':c>=1050?'Por encima de la media':c>=950?'Cerca de la media':c>=900?'Por debajo de la media':'Muy por debajo de la media';}
+function shuffleReactivo(r){
+  if(r._opts)return;
+  const tc=r[r.correcta];
+  let opts=[{l:'a',t:r.a},{l:'b',t:r.b},{l:'c',t:r.c}];
+  if(r.tipo!=='asoc'&&r.tipo!=='comp'){
+    for(let i=opts.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[opts[i],opts[j]]=[opts[j],opts[i]];}
+  }
+  r._opts=opts; r._answerKey=opts.find(o=>o.t===tc).l;
+}
+function startExam(){
+  STATE.qIdx=0;STATE.answers={};
+  BANCO.forEach(r=>{delete r._opts;delete r._answerKey;shuffleReactivo(r);});
+  hide('screen-home');buildNavGrid();show('screen-exam');startTimer();renderQ();
+}
+function retryExam(){hide('screen-results');startExam();}
+function startTimer(){
+  STATE.timerSec=TIEMPO_MIN*60;renderTimer();
+  STATE.timerID=setInterval(()=>{STATE.timerSec--;renderTimer();
+    if(STATE.timerSec<=0){clearInterval(STATE.timerID);timeOut();}},1000);
+}
+function renderTimer(){
+  const tb=$('timer-box');tb.textContent=fmtT(STATE.timerSec);
+  tb.className='timer-box'+(STATE.timerSec<=60?' danger':STATE.timerSec<=180?' warn':'');
+}
+function timeOut(){hide('screen-exam');show('screen-timeout');}
+function finishAndShow(){hide('screen-timeout');showResults();}
+function buildNavGrid(){
+  const g=$('nav-grid');g.innerHTML='';
+  BANCO.forEach((r,i)=>{
+    const b=document.createElement('button');
+    b.className='nav-btn';b.id='nb-'+i;b.textContent=i+1;b.title=r.tipo;
+    b.onclick=(()=>{const x=i;return()=>goTo(x);})();
+    g.appendChild(b);
+  });
+  updateNav();
+}
+function updateNav(){
+  BANCO.forEach((r,i)=>{
+    const b=$('nb-'+i);if(!b)return;
+    let cls='nav-btn';
+    if(STATE.answers.hasOwnProperty(i))cls+=STATE.answers[i]===r._answerKey?' answered':' wrong-nav';
+    if(i===STATE.qIdx)cls+=' current';
+    b.className=cls;
+  });
+  $('progress-bar').style.width=(Object.keys(STATE.answers).length/BANCO.length*100)+'%';
+}
+function goTo(i){if(i<0||i>=BANCO.length)return;STATE.qIdx=i;renderQ();}
+function renderQ(){
+  const r=BANCO[STATE.qIdx],n=BANCO.length,i=STATE.qIdx;
+  $('q-num').textContent='Pregunta '+(i+1)+' de '+n;
+  $('q-text').textContent=r.enunciado;
+  $('btn-prev').disabled=i===0;
+  $('btn-next-nav').disabled=i===n-1;
+  $('btn-entregar').style.display=i===n-1?'block':'none';
+  const con=$('options');con.innerHTML='';
+  const saved=STATE.answers.hasOwnProperty(i)?STATE.answers[i]:null;
+  const answered=saved!==null,cl=r._answerKey;
+  r._opts.forEach(o=>{
+    const btn=document.createElement('button');
+    btn.className='opt-btn';btn.dataset.key=o.l;
+    const sm=r.tipo==='asoc'||r.tipo==='comp';
+    btn.innerHTML='<span class="opt-letter">'+o.l.toUpperCase()+'</span><span style="'+(sm?'font-size:.83rem;line-height:1.6;':'')+'">'+o.t+'</span>';
+    if(answered){
+      btn.disabled=true;
+      if(saved===cl){if(o.l===cl)btn.classList.add('correct');}
+      else{if(o.l===saved)btn.classList.add('wrong');if(o.l===cl)btn.classList.add('correct');}
+    }else{btn.onclick=()=>selectOpt(o.l,btn);}
+    con.appendChild(btn);
+  });
+  const ex=$('explanation');
+  if(answered){
+    const ok=saved===cl;
+    ex.innerHTML=(ok?'✅ ':'❌ ')+(r.exp||'Respuesta correcta: '+cl.toUpperCase());
+    ex.className='explanation show'+(ok?'':' fail');
+  }else{ex.className='explanation';ex.innerHTML='';}
+  updateNav();
+}
+function selectOpt(key,cb){
+  const r=BANCO[STATE.qIdx];STATE.answers[STATE.qIdx]=key;
+  const cl=r._answerKey,ok=key===cl;
+  document.querySelectorAll('.opt-btn').forEach(b=>{
+    b.disabled=true;
+    if(b.dataset.key===cl)b.classList.add('correct');
+    if(b===cb&&!ok)b.classList.add('wrong');
+  });
+  const ex=$('explanation');
+  ex.innerHTML=(ok?'✅ ':'❌ ')+(r.exp||'Respuesta correcta: '+cl.toUpperCase());
+  ex.className='explanation show'+(ok?'':' fail');
+  updateNav();
+}
+function pedirConfirmar(){
+  const p=BANCO.length-Object.keys(STATE.answers).length;
+  $('modal-msg').innerHTML=p>0?'Tienes <strong>'+p+'</strong> pregunta(s) sin responder. ¿Entregar?':'¿Entregar el simulacro?';
+  $('modal-bg').classList.add('open');
+}
+function cerrarModal(){$('modal-bg').classList.remove('open');}
+function confirmarEntrega(){cerrarModal();clearInterval(STATE.timerID);hide('screen-exam');showResults();}
+function showResults(){
+  let c=0,w=0,sk=0;
+  const porTipo={};
+  BANCO.forEach((r,i)=>{
+    const t=r.tipo||'regular';
+    if(!porTipo[t])porTipo[t]={c:0,t2:0,nom:t};
+    porTipo[t].t2++;
+    if(!STATE.answers.hasOwnProperty(i))sk++;
+    else if(STATE.answers[i]===r._answerKey){c++;porTipo[t].c++;}
+    else w++;
+  });
+  const tot=BANCO.length,pct=Math.round(c/tot*100),cne=calcCNE(c,tot),col=cneColor(cne);
+  $('res-score').textContent=c+'/'+tot+' ('+pct+'%)';
+  $('res-ok').textContent=c;$('res-fail').textContent=w;$('res-skip').textContent=sk;
+  $('cne-val').textContent=cne;$('cne-val').style.color=col;
+  $('cne-lbl').textContent=cneLabel(cne);$('cne-lbl').style.color=col;
+  $('cne-bar').style.width=((cne-700)/600*100)+'%';$('cne-bar').style.background=col;
+  $('cne-note').textContent='Estimado con '+c+' aciertos de '+tot+' ('+pct+'%). Z=(X-50)/16.67, ICNE=1000+100Z.';
+  const rv=$('review-list');rv.innerHTML='';
+  BANCO.forEach((r,i)=>{
+    const g=STATE.answers[i],cl=r._answerKey;
+    const om={};r._opts.forEach(o=>om[o.l]=o.t);
+    let st='skip',bd='Sin responder';
+    if(g){st=g===cl?'ok':'fail';bd=g===cl?'Correcta':'Incorrecta';}
+    rv.innerHTML+='<div class="rev-item"><div class="rev-header">'
+      +'<span class="rev-badge '+st+'">'+bd+'</span>'
+      +'<span class="rev-num">P.'+(i+1)+'</span></div>'
+      +'<div class="rev-q" style="white-space:pre-line;">'+r.enunciado+'</div>'
+      +(g?'<div class="rev-ans">Tu resp: '+g.toUpperCase()+') '+(om[g]||'')+'</div>':'')
+      +(g!==cl?'<div class="rev-ans ok-ans">✓ Correcta: '+cl.toUpperCase()+') '+(om[cl]||'')+'</div>':'')
+      +(r.exp?'<div class="rev-exp">💡 '+r.exp+'</div>':'')
+      +'</div>';
+  });
+  show('screen-results');
+}
+
+</script>
+</body>
+</html>
